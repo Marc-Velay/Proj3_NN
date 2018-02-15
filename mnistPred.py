@@ -3,7 +3,7 @@ from sklearn.neural_network import MLPClassifier
 from sklearn.metrics import confusion_matrix
 from matplotlib import pyplot as plt
 import numpy as np
-from random import shuffle
+from random import shuffle, randrange
 import pickle
 import os.path
 
@@ -32,14 +32,12 @@ if __name__ == "__main__":
     X_train, X_test, y_train, y_test = load_data()
 
 
-    print(y_test)
-
-    for i in range(0,5):
+    '''for i in range(0,5):
         ex = np.reshape(X_train[i*10000], (28,28))
         plt.imshow(ex)
         plt.show()
         print(y_train[i*10000])
-
+        '''
     if not os.path.isfile(mlp_file):
         mlp = MLPClassifier(hidden_layer_sizes=(80, 40, 15), activation='logistic', solver='lbfgs', learning_rate_init=1e-4)
         print('Training neural network')
@@ -62,6 +60,18 @@ if __name__ == "__main__":
         with open(mlp_file, 'rb') as fid:
             mlp = pickle.load(fid)
 
-        score = mlp.score(X_test, y_test)
-        print('Accuracy: ')
-        print(score)
+    for i in range(0, 10):
+        index = randrange(0, 60000, 1)
+        pred = mlp.predict(X_train[index:index+1])
+        pred_proba = mlp.predict_proba(X_train[index:index+1])
+        print("We predict: ")
+        print(pred[0])
+        print("Was supposed to be: ")
+        print(y_train[index])
+        print("Proba: ")
+        print(pred_proba)
+        plt.plot(pred_proba)
+        plt.show()
+        ex = np.reshape(X_train[index:index+1], (28,28))
+        plt.imshow(ex)
+        plt.show()
