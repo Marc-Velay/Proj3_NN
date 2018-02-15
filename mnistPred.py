@@ -14,10 +14,8 @@ def load_data(dtype=np.float32, order='F'):
     X = data['data']
     y = data["target"]
 
-    # Normalize features
     X = X / 255
 
-    # Create train-test split (as [Joachims, 2006])
     print("Creating train-test split...")
     n_train = 60000
     X_train = X[:n_train]
