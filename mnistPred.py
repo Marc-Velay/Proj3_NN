@@ -10,9 +10,7 @@ import os.path
 mlp_file = 'saved_classifier.pkl'
 
 def load_data(dtype=np.float32, order='F'):
-    """Load the data, then cache and memmap the train/test split"""
-    ######################################################################
-    # Load dataset
+    """Load the data, then train/test split"""
     print("Loading dataset...")
     data = fetch_mldata('MNIST original')
     X = data['data']
@@ -60,7 +58,7 @@ if __name__ == "__main__":
         with open(mlp_file, 'wb') as fid:
             pickle.dump(mlp, fid)
     else:
-        print('already trained network')
+        print('already trained network, delete .pkl file to retrain')
         with open(mlp_file, 'rb') as fid:
             mlp = pickle.load(fid)
 
