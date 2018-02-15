@@ -31,3 +31,8 @@ X_train, X_test, y_train, y_test = load_data()
 
 
 print(X_train[:100])
+print(X_train.size)
+for i in range(0,10):
+    ex = np.reshape(X_train[i], (28,28))
+    plt.imshow(ex)
+    plt.show()
