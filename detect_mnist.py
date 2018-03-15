@@ -63,6 +63,7 @@ if __name__ == "__main__":
     X_train, Y_train = unison_shuffled_copies(X_train, Y_train)
     print(Y_train.shape)
 
+
     new_samples_test = create_imgs(10000)
     X_test = np.concatenate((X_test, new_samples_test), axis=0)
     Y_test = []
@@ -72,6 +73,7 @@ if __name__ == "__main__":
     Y_test = np.reshape(Y_test, (20000,1))
     X_test, Y_test = unison_shuffled_copies(X_test, Y_test)
     print(Y_test.shape)
+
 
     if not os.path.isfile(mlp_file):
         mlp = MLPClassifier(hidden_layer_sizes=(80, 40, 15), activation='logistic', solver='lbfgs', learning_rate_init=1e-4)
