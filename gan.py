@@ -118,7 +118,11 @@ def train_for_n(z_input, generator_model, discriminator_model, gan_model,
 
             # Train the discriminator to correctly detect fake images from real
             discriminator.trainable = True
+
             d_loss, d_f_score = discriminator_model.train_on_batch(x=X, y=y)
+            print(d_loss, d_f_score)
+            #print(discriminator_model.train_on_batch(x=X, y=y))
+            #input()
             discriminator.trainable = False
 
             # Coerce generator to try to make real samples
@@ -189,9 +193,9 @@ if __name__ == "__main__":
     # Define constants
     z_input_vector = 100
     n_train_samples = 50000
-    z_plot_freq = 25
+    z_plot_freq = 1000
     epoch = 6000
-    plot_freq = 500
+    plot_freq = 1000
     batch = 300
 
     generator_optimizer = SGD(lr=0.1, momentum=0.3, decay=1e-5)
@@ -228,7 +232,8 @@ if __name__ == "__main__":
     discriminator.add(Dense(1, kernel_initializer="glorot_uniform"))
     discriminator.add(Activation('sigmoid'))
     discriminator.compile(loss='binary_crossentropy', optimizer=discriminator_optimizer,
-                          metrics=['accuracy',fbeta_score])
+                          metrics=[fbeta_score])
+    #'accuracy',
     discriminator.summary()
 
     gan = generative_adversarial_network(generator, discriminator)
