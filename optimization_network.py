@@ -43,8 +43,7 @@ if __name__ == "__main__":
                 for c in range(1,40,5):
                     mlp = MLPClassifier(hidden_layer_sizes=(a, b, c), activation='logistic', solver='lbfgs', learning_rate_init=1e-4)
                     print('Training neural network')
-                    param(mlp.hidden_layer_sizes)
-                    print(param)
+                    print(mlp.hidden_layer_sizes)
                     mlp.fit(X_train, y_train)
                     output = mlp.predict(X_test)
 
