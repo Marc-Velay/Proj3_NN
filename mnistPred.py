@@ -9,22 +9,26 @@ import os.path
 
 mlp_file = 'saved_classifier.pkl'
 
+def unison_shuffled_copies(a, b):
+    assert len(a) == len(b)
+    p = np.random.permutation(len(a))
+    return a[p], b[p]
+
+
 def load_data(dtype=np.float32, order='F'):
     """Load the data, then train/test split"""
     print("Loading dataset...")
     data = fetch_mldata('MNIST original')
     X = data['data']
     y = data['target']
-
     X = X / 255
+    X, y = unison_shuffled_copies(X, y)
 
     print("Creating train-test split...")
-    n_train = 60000
-    X_train = X[:n_train]
-    y_train = y[:n_train]
-    X_test = X[n_train:]
-    y_test = y[n_train:]
-
+    X_train = X[0:36000]
+    y_train = y[0:36000]
+    X_test = X[36000:60000]
+    y_test = y[36000:60000]
     return X_train, X_test, y_train, y_test
 
 
@@ -61,7 +65,7 @@ if __name__ == "__main__":
             mlp = pickle.load(fid)
 
     for i in range(0, 10):
-        index = randrange(0, 60000, 1)
+        index = randrange(0, 36000, 1)
         pred = mlp.predict(X_train[index:index+1])
         pred_proba = mlp.predict_proba(X_train[index:index+1])
         print("We predict: ")
