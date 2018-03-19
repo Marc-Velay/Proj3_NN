@@ -25,10 +25,10 @@ def load_data(dtype=np.float32, order='F'):
     X, y = unison_shuffled_copies(X, y)
 
     print("Creating train-test split...")
-    X_train = X[0:36000]
-    y_train = y[0:36000]
-    X_test = X[36000:60000]
-    y_test = y[36000:60000]
+    X_train = X[0:42000]
+    y_train = y[0:42000]
+    X_test = X[42000:60000]
+    y_test = y[42000:60000]
     return X_train, X_test, y_train, y_test
 
 
