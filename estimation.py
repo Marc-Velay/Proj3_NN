@@ -61,3 +61,10 @@ if __name__ == "__main__":
     plt.bar(np.arange(10),counter_predidt.transpose()[0],width=0.4,color='r',label="estimation prediction")
     plt.legend()
     plt.show()
+    counter_pred_proba=0
+    for i in range(0, len(X)):
+        pred_proba = mlp.predict_proba(X[i:i+1])
+        counter_pred_proba+=np.sum(pred_proba)
+    counter_pred_proba/=len(X)
+    print("average sum of probabilities:")
+    print(counter_pred_proba)
