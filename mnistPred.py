@@ -82,7 +82,13 @@ if __name__ == "__main__":
 
         f1 = plt.figure(2)
         ex = np.reshape(X_train[index:index+1], (28,28))
-        plt.imshow(ex)
+        plt.imshow(ex, cmap='gray')
         f1.show()
-        input()
+        print('press enter to view next example: ')
+        #input()
         plt.close("all")
+
+
+    score = mlp.score(X_test, y_test)
+    print('Accuracy: ')
+    print(score)

@@ -191,12 +191,12 @@ if __name__ == "__main__":
     random.seed(123)
 
     # Define constants
-    z_input_vector = 100
-    n_train_samples = 50000
-    z_plot_freq = 1000
-    epoch = 6000
-    plot_freq = 1000
-    batch = 300
+    z_input_vector = 225
+    n_train_samples = 60000
+    epoch = 30000
+    z_plot_freq = int(epoch/4)
+    plot_freq = int(epoch/4)
+    batch = 1000
 
     generator_optimizer = SGD(lr=0.1, momentum=0.3, decay=1e-5)
     discriminator_optimizer = SGD(lr=0.1, momentum=0.1, decay=1e-5)
@@ -208,7 +208,7 @@ if __name__ == "__main__":
     # training (see Salimans et al. 2016). The model is a traditional MLP GAN similarly
     # proposed by Goodfellow et al. 2014
     generator = Sequential()
-    generator.add(Dense(kernel_initializer="glorot_uniform", input_dim=100, units=1600))
+    generator.add(Dense(kernel_initializer="glorot_uniform", input_dim=z_input_vector, units=1600))
     generator.add(BatchNormalization())
     generator.add(LeakyReLU(alpha=0.3))
     generator.add(Dense(1200, kernel_initializer="glorot_uniform"))

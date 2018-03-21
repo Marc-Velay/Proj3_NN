@@ -27,10 +27,10 @@ def load_data(dtype=np.float32, order='F'):
     X, y = unison_shuffled_copies(X, y)
 
     print("Creating train-test split...")
-    X_train = X[0:42000]
-    y_train = y[0:42000]
-    X_test = X[42000:70000]
-    y_test = y[42000:70000]
+    X_train = X[0:56000]#42000
+    y_train = y[0:56000]
+    X_test = X[56000:]
+    y_test = y[56000:]
 
     return X_train, X_test, y_train, y_test
 
@@ -50,8 +50,14 @@ if __name__ == "__main__":
 
     else:
         print('already trained network, delete .pkl file to retrain')
-        with open(mlp_file, 'rb') as fid:
-            mlp = pickle.load(fid)
-        cv = ShuffleSplit(n_splits=3, test_size=0.4, random_state=0)
-        cross_val=cross_val_predict(mlp,X_train,y_train,n_jobs=4,verbose=9000)
+        '''with open(mlp_file, 'rb') as fid:
+            mlp = pickle.load(fid)'''
+        print('training MLP')
+        cv = ShuffleSplit(n_splits=10, test_size=0.2)
+        mlp = MLPClassifier(hidden_layer_sizes=(40, 20, 15), activation='logistic', solver='lbfgs', learning_rate_init=1e-5)
+        mlp.fit(X_train, y_train)
+        cross_val=cross_val_predict(mlp,X_train,y_train, n_jobs=4,verbose=9000)
+        score = mlp.score(X_test, y_test)
+        print('Accuracy: ')
+        print(score)
         print(cross_val)
